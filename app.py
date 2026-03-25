@@ -31,10 +31,10 @@ def load_model():
     if os.path.exists(MODEL_PATH):
         try:
             model = tf.keras.models.load_model(MODEL_PATH)
-            print("✅ CNN-BiLSTM v3 model loaded successfully")
+            print(" CNN-BiLSTM v3 model loaded successfully")
             return model
         except Exception as e:
-            print(f"⚠️ Failed to load model: {e}")
+            print(f"Failed to load model: {e}")
             return None
     else:
         print("⚠️ Model directory not found - running in demo mode")

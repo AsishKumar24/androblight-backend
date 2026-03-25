@@ -6,6 +6,7 @@ Handles Android manifest parsing and permission risk analysis.
 
 import os
 import re
+import xml.etree.ElementTree as ET
 
 from models.permissions_db import DANGEROUS_PERMISSIONS, SUSPICIOUS_COMBOS
 
@@ -39,7 +40,6 @@ def parse_android_manifest(extract_dir):
             manifest_xml = axml.get_xml_obj()
         
         # Parse the XML tree
-        import xml.etree.ElementTree as ET
         root = ET.fromstring(manifest_xml)
         
         # Extract package name

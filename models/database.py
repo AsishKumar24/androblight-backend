@@ -44,7 +44,7 @@ class ScanRecord(db.Model):
     file_hash = db.Column(db.String(64), nullable=True, index=True)
     scan_type = db.Column(db.String(20), nullable=False, default='apk')  # 'apk' or 'playstore'
     identifier = db.Column(db.String(255), nullable=False)  # filename or package name
-    file_name = db.Column(db.String(255), nullable=True)
+    file_name = db.Column(db.String(255), nullable=True, index=True)
     package_name = db.Column(db.String(255), nullable=True, index=True)
     file_size = db.Column(db.Integer, nullable=True)
     label = db.Column(db.String(20), nullable=False)  # 'Malware' or 'Benign'

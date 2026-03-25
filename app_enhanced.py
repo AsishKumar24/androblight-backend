@@ -26,7 +26,6 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import tensorflow as tf
 import numpy as np
-import os
 import cv2
 import shutil
 import zipfile
@@ -35,9 +34,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 import json
 import re
-from functools import lru_cache
 import requests
-from io import BytesIO
 
 # Optional: PDF report generation
 try:
@@ -220,14 +217,18 @@ MALWARE_FAMILIES = {
 model = None
 
 def load_model():
-    """Load the CNN-LSTM model"""
+    """Load the CNN-BiLSTM v3 model from the model/ directory"""
     global model
-    model_path = 'cnn-lstm_detection_model.h5'
+    model_path = 'model/'
     if os.path.exists(model_path):
-        model = tf.keras.models.load_model(model_path)
-        print("✅ Model loaded successfully")
+        try:
+            model = tf.keras.models.load_model(model_path)
+            print("✅ CNN-BiLSTM v3 model loaded successfully")
+        except Exception as e:
+            print(f"⚠️ Failed to load model: {e}")
+            model = None
     else:
-        print("⚠️ Model file not found - running in demo mode")
+        print("⚠️ Model directory not found - running in demo mode")
         model = None
 
 # ============================================================================
@@ -297,7 +298,6 @@ def parse_android_manifest(extract_dir):
             manifest_xml = axml.get_xml_obj()
         
         # Parse the XML tree
-        import xml.etree.ElementTree as ET
         root = ET.fromstring(manifest_xml)
         
         # Extract package name
@@ -458,7 +458,7 @@ def extract_certificate_info(extract_dir):
 def apk_to_image(extracted_dir):
     """
     Converts the extracted APK files into a greyscale image array for model prediction.
-    Returns: numpy array of shape (256, 256, 1)
+    Returns: numpy array of shape (128, 128, 1)  — v3 model input size
     """
     files_to_include = ['classes.dex', 'AndroidManifest.xml', 'META-INF/CERT.RSA', 'resources.arsc']
     
@@ -476,7 +476,8 @@ def apk_to_image(extracted_dir):
     padded_data[:len(data_array)] = data_array
     
     image = padded_data.reshape((size, size))
-    resized_image = cv2.resize(image, (256, 256), interpolation=cv2.INTER_LINEAR)
+    # CRITICAL: v3 model expects 128x128 input (not 256x256)
+    resized_image = cv2.resize(image, (128, 128), interpolation=cv2.INTER_LINEAR)
     
     normalized_image = resized_image / 255.0
     final_image = np.expand_dims(normalized_image, axis=-1)
