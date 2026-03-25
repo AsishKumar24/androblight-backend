@@ -1,0 +1,145 @@
+{
+  "1dfce4269081693f10350dbabd26991a59d7c2bb81f870de54e5b113f4785b7a": {
+    "status": "success",
+    "metadata": {
+      "file_name": "F-Droid.apk",
+      "file_size": 12426276,
+      "file_size_readable": "11.85 MB",
+      "sha256": "1dfce4269081693f10350dbabd26991a59d7c2bb81f870de54e5b113f4785b7a",
+      "md5": "8e44c488dc211b4c46cd1206ad598731",
+      "scan_timestamp": "2026-02-02T14:45:12.511035"
+    },
+    "manifest": {
+      "package_name": null,
+      "permissions_count": 0
+    },
+    "ml_detection": {
+      "label": "Malware",
+      "confidence": 0.9285856485366821,
+      "raw_score": 0.9285856485366821,
+      "malware_family": {
+        "family": "ransomware",
+        "description": "Encrypts files and demands payment"
+      }
+    },
+    "permission_analysis": {
+      "total_count": 0,
+      "critical": [],
+      "high": [],
+      "medium": [],
+      "low": [],
+      "unknown": [],
+      "suspicious_combos": [],
+      "risk_score": 0
+    },
+    "certificate": {
+      "signed": true,
+      "issuer": null,
+      "subject": null,
+      "valid_from": null,
+      "valid_to": null,
+      "fingerprint_sha256": "92e00f3587478b6caf6a2e4419420d1b3587efd42197e007059ba5e6b77ee464",
+      "debug_signed": false
+    },
+    "virustotal": null,
+    "overall_score": 63,
+    "threat_level": "medium",
+    "recommendation": [
+      "\u26a0\ufe0f Review permissions carefully before installing"
+    ]
+  },
+  "89fb6689d36f2f7acc030a0d101427d339f301df35602485c05cf2477f91f18d": {
+    "status": "success",
+    "metadata": {
+      "file_name": "Google_Chrome_v138.0.7204.179_APKPure_Installer.apk",
+      "file_size": 5828850,
+      "file_size_readable": "5.56 MB",
+      "sha256": "89fb6689d36f2f7acc030a0d101427d339f301df35602485c05cf2477f91f18d",
+      "md5": "0b2b020582447e2153f97cb6cfba6adb",
+      "scan_timestamp": "2026-02-02T14:49:11.271480"
+    },
+    "manifest": {
+      "package_name": null,
+      "permissions_count": 0
+    },
+    "ml_detection": {
+      "label": "Benign",
+      "confidence": 0.7216391563415527,
+      "raw_score": 0.27836084365844727,
+      "malware_family": null
+    },
+    "permission_analysis": {
+      "total_count": 0,
+      "critical": [],
+      "high": [],
+      "medium": [],
+      "low": [],
+      "unknown": [],
+      "suspicious_combos": [],
+      "risk_score": 0
+    },
+    "certificate": {
+      "signed": true,
+      "issuer": null,
+      "subject": null,
+      "valid_from": null,
+      "valid_to": null,
+      "fingerprint_sha256": "97d06c08a4d7774f82e6024f4f60df20cce38d3ba7aa24e6c47075e6ba204240",
+      "debug_signed": false
+    },
+    "virustotal": null,
+    "overall_score": 100,
+    "threat_level": "low",
+    "recommendation": [
+      "\u2705 This application appears safe to install"
+    ]
+  },
+  "ab1184bb3ba772f76a3947c4646103d46b9c0a1cde788124244ab83bd881ac7a": {
+    "status": "success",
+    "metadata": {
+      "file_name": "Google_Chrome_v145.0.7632.45_APKPure_Installer.apk",
+      "file_size": 5828850,
+      "file_size_readable": "5.56 MB",
+      "sha256": "ab1184bb3ba772f76a3947c4646103d46b9c0a1cde788124244ab83bd881ac7a",
+      "md5": "4f1a5ee9efb861da1bcee1b25ffe9ea7",
+      "scan_timestamp": "2026-02-13T13:00:41.886851",
+      "package_name": null,
+      "version_name": null
+    },
+    "manifest": {
+      "package_name": null,
+      "permissions_count": 0
+    },
+    "ml_detection": {
+      "label": "Benign",
+      "confidence": 0.7216391563415527,
+      "raw_score": 0.27836087346076965,
+      "malware_family": null
+    },
+    "permission_analysis": {
+      "total_count": 0,
+      "critical": [],
+      "high": [],
+      "medium": [],
+      "low": [],
+      "unknown": [],
+      "suspicious_combos": [],
+      "risk_score": 0
+    },
+    "certificate": {
+      "signed": true,
+      "issuer": null,
+      "subject": null,
+      "valid_from": null,
+      "valid_to": null,
+      "fingerprint_sha256": "97d06c08a4d7774f82e6024f4f60df20cce38d3ba7aa24e6c47075e6ba204240",
+      "debug_signed": false
+    },
+    "virustotal": null,
+    "overall_score": 100,
+    "threat_level": "low",
+    "recommendation": [
+      "\u2705 This application appears safe to install"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+# AndroBlight Enhanced Backend Dependencies
+# =========================================
+
+# Core Flask
+flask>=2.3.0
+flask-cors>=4.0.0
+werkzeug>=2.3.0
+
+# ML & Image Processing
+tensorflow>=2.13.0
+numpy>=1.24.0
+opencv-python>=4.8.0
+
+# APK Analysis
+androguard>=3.4.0
+
+# Optional: VirusTotal API
+requests>=2.31.0
+
+# Optional: PDF Report Generation
+reportlab>=4.0.0
+
+# Development
+python-dotenv>=1.0.0
