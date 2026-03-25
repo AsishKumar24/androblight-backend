@@ -2,15 +2,18 @@
 Scan Routes
 ============
 API endpoints for APK scanning: /predict, /predict-playstore, /batch-predict
+Now saves to database when user is authenticated.
 """
 
 import os
 import hashlib
 import shutil
+import json
 import numpy as np
 from datetime import datetime
 from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
+from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
 
 from config import UPLOAD_FOLDER, TEMP_EXTRACT_FOLDER, VIRUSTOTAL_ENABLED
 from services.scanner import (
@@ -24,6 +27,42 @@ from services.virustotal import check_virustotal
 import re
 
 scan_bp = Blueprint('scan', __name__)
+
+
+def _get_optional_user_id():
+    """Get user ID from JWT if present, otherwise return None (anonymous scan)"""
+    try:
+        verify_jwt_in_request(optional=True)
+        identity = get_jwt_identity()
+        return int(identity) if identity else None
+    except Exception:
+        return None
+
+
+def _save_scan_to_db(result, user_id, file_hash, scan_type='apk'):
+    """Save scan result to database if user is authenticated"""
+    if user_id is None:
+        return
+    try:
+        from models.database import db, ScanRecord
+        record = ScanRecord(
+            user_id=user_id,
+            file_hash=file_hash,
+            scan_type=scan_type,
+            identifier=result.get('metadata', {}).get('file_name', 'unknown'),
+            file_name=result.get('metadata', {}).get('file_name'),
+            package_name=result.get('metadata', {}).get('package_name'),
+            file_size=result.get('metadata', {}).get('file_size'),
+            label=result.get('ml_detection', {}).get('label', 'Unknown'),
+            confidence=result.get('ml_detection', {}).get('confidence', 0.0),
+            overall_score=result.get('overall_score'),
+            threat_level=result.get('threat_level'),
+            result_json=json.dumps(result),
+        )
+        db.session.add(record)
+        db.session.commit()
+    except Exception as e:
+        print(f"⚠️ Failed to save scan to DB: {e}")
 
 
 def _get_model():
@@ -111,6 +150,8 @@ def predict():
     Response: Comprehensive scan result with all analyses
     """
     try:
+        user_id = _get_optional_user_id()
+
         if 'file' not in request.files:
             return jsonify({'error': 'No file provided', 'status': 'error'}), 400
         
@@ -230,6 +271,9 @@ def predict():
         # Cache result
         cache[file_hash] = result
         save_cache(cache)
+
+        # Save to database (if user is authenticated)
+        _save_scan_to_db(result, user_id, file_hash, scan_type='apk')
         
         # Cleanup
         os.remove(apk_path)
@@ -284,6 +328,10 @@ def predict_playstore():
         cache = load_cache()
         cache[file_hash] = mock_res
         save_cache(cache)
+
+        # Save to database (if user is authenticated)
+        ps_user_id = _get_optional_user_id()
+        _save_scan_to_db(mock_res, ps_user_id, file_hash, scan_type='playstore')
         
         return jsonify({
             'status': 'success',

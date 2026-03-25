@@ -13,6 +13,12 @@ REPORTS_FOLDER = 'reports'
 CACHE_FILE = 'scan_cache.json'
 MODEL_PATH = os.environ.get('MODEL_PATH', 'model/')
 
+# Database
+DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///androblight.db')
+
+# JWT Secret — override via environment variable in production
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'androblight-secret-key-change-in-production')
+
 # VirusTotal API (optional - set your API key)
 VIRUSTOTAL_API_KEY = os.environ.get('VIRUSTOTAL_API_KEY', '')
 VIRUSTOTAL_ENABLED = bool(VIRUSTOTAL_API_KEY)
